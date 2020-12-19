@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row text-center">
+    <label for="request" class="col-5 m-2">Search images:</label>
+    <label for="selectedItem" class="col-5 m-2">Maximum per page:</label>
+    <input type="text" name="serch" #request placeholder="search bar" class="col-5 m-2" id="request"  (change)="onSearchImg(request.value)">
+    <select class="col-5 m-2" name="selectedItem" id="selectedItem"  [(ngModel)]="selectedItem" (change)="onSearchImg(request.value)">
+      <option [ngValue]="10">10</option>
+      <option [ngValue]="20">20</option>
+      <option [ngValue]="50">50</option>
+      <option [ngValue]="100">100</option>
+    </select>
+  </div>
+  <div class="row text-center" id="gallery">
+    <div *ngIf="loading" class="col-12" >
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="loader">
+    </div>
+    <div *ngIf="imgResponse.totalHits>0; else noImg">
+      <ng-container *ngFor="let img of imgResponse.hits" class="col-3">
+          <img src="{{img.previewURL}}" (click)="openImg(img.pageURL)" class="m-2" />
+      </ng-container>
+    </div>
+    <ng-template #noImg>  
+        <h2>There are no images that suits your criteria</h2>  
+    </ng-template>   
+  </div>
+</div>
